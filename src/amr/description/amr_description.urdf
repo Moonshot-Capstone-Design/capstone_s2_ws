@@ -20,7 +20,7 @@
       <color rgba="1 0 0 1" />
     </material>
 
-  
+
     <!-- Base Footprint -->
     <link name="base_link"/>
 

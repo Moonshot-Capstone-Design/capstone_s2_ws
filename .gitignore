@@ -1,4 +1,18 @@
+# colcon/CMake output
 build/
 log/
 install/
-.vscode/
+
+# etc file and cache
+*.pyc
+*.iml
+*.swp
+.project
+.pydevproject
+.DS_Store
+.idea
+
+# vscode ignore
+.vscode/*
+.vscode/extensions.json
+.vscode/settings.json
