@@ -11,18 +11,19 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
+    ## front
     channel_type1 = LaunchConfiguration('channel_type1', default='serial')
-    serial_port1 = LaunchConfiguration('serial_port1', default='/dev/ttyUSB2') 
-    serial_baudrate1 = LaunchConfiguration('serial_baudrate1', default='1000000') # for s2 is 1000000
+    serial_port1 = LaunchConfiguration('serial_port1', default='/dev/ttyUSB_LIDAR1_FRONT')
+    serial_baudrate1 = LaunchConfiguration('serial_baudrate1', default='460800') # for c1 is 460800
     frame_id1 = LaunchConfiguration('frame_id1', default='lidar1_link')
     inverted1 = LaunchConfiguration('inverted1', default='false')
     angle_compensate1 = LaunchConfiguration('angle_compensate1', default='true')
     scan_mode1 = LaunchConfiguration('scan_mode1', default='DenseBoost')
-    
 
+    ## back
     channel_type2 = LaunchConfiguration('channel_type2', default='serial')
-    serial_port2 = LaunchConfiguration('serial_port2', default='/dev/ttyUSB1') 
-    serial_baudrate2 = LaunchConfiguration('serial_baudrate2', default='1000000') # for s2 is 1000000
+    serial_port2 = LaunchConfiguration('serial_port2', default='/dev/ttyUSB_LIDAR2_REAR')
+    serial_baudrate2 = LaunchConfiguration('serial_baudrate2', default='460800') # for c1 is 460800
     frame_id2 = LaunchConfiguration('frame_id2', default='lidar2_link')
     inverted2 = LaunchConfiguration('inverted2', default='false')
     angle_compensate2 = LaunchConfiguration('angle_compensate2', default='true')
@@ -43,7 +44,7 @@ def generate_launch_description():
             'serial_baudrate1',
             default_value=serial_baudrate1,
             description='Specifying usb port baudrate to connected lidar1'),
-        
+
         DeclareLaunchArgument(
             'frame_id1',
             default_value=frame_id1,
@@ -79,6 +80,24 @@ def generate_launch_description():
                               }],
             output='screen'),
 
+        Node(
+            package='laser_filters',
+            executable='scan_to_scan_filter_chain',
+            name='scan_filter_chain',
+            namespace='rplidar1',
+            parameters=[{
+                'filter1': {
+                    'name': 'angle1',
+                    'type': 'laser_filters/LaserScanAngularBoundsFilterInPlace',
+                    'params': {
+                        'lower_angle': -1.8,
+                        'upper_angle': 0.2
+                    }
+                }
+            }],
+            remappings=[('rplidar1/scan', '/scan')],
+            output='screen'
+        ),
 
         DeclareLaunchArgument(
             'channel_type2',
@@ -94,7 +113,7 @@ def generate_launch_description():
             'serial_baudrate2',
             default_value=serial_baudrate2,
             description='Specifying usb port baudrate to connected lidar2'),
-        
+
         DeclareLaunchArgument(
             'frame_id2',
             default_value=frame_id2,
@@ -128,5 +147,25 @@ def generate_launch_description():
                          'angle_compensate': angle_compensate2, 
                          'scan_mode': scan_mode2}],
             output='screen'),
+
+        Node(
+            package='laser_filters',
+            executable='scan_to_scan_filter_chain',
+            name='scan_filter_chain',
+            namespace='rplidar2',
+            parameters=[{
+                'filter1': {
+                    'name': 'angle1',
+                    'type': 'laser_filters/LaserScanAngularBoundsFilterInPlace',
+                    'params': {
+                        'lower_angle': -1.8,
+                        'upper_angle': 0.25
+                    }
+                }
+            }],
+            remappings=[('rplidar2/scan', '/scan')],
+            output='screen'
+        ),
+
     ])
 

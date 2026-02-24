@@ -1,11 +1,13 @@
 #!/bin/bash
 
-echo "delete remap the device serial port(ttyUSBX) to  rplidar"
-echo "sudo rm   /etc/udev/rules.d/rplidar.rules"
-sudo rm   /etc/udev/rules.d/rplidar.rules
-echo " "
-echo "Restarting udev"
+set -euo pipefail
+
+echo "Removing /etc/udev/rules.d/rplidar.rules"
+sudo rm -f /etc/udev/rules.d/rplidar.rules
+
 echo ""
-sudo service udev reload
-sudo service udev restart
-echo "finish  delete"
+echo "Reloading udev rules"
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
+echo "Done."
