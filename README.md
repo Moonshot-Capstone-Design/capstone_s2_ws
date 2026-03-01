@@ -15,3 +15,13 @@ rm -rf build/realsense2_camera build/realsense2_* install/realsense2_* log
 # 다시 빌드
 colcon build --packages-up-to realsense2_camera \
   --cmake-args -DCMAKE_BUILD_TYPE=Release
+
+ros2 launch manipulator capstone_arm_display.launch.py
+
+ros2 launch realsense2_camera rs_launch.py depth_module.depth_profile:=640x480x15 pointcloud.enable:=true align_depth.enable:=true
+
+ros2 run camera_perception_pkg yolov8_node
+
+ros2 run camera_perception_pkg object_distance_node --ros-args   -p detections_topic:=/detections   -p depth_image_topic:=/camera/camera/aligned_depth_to_color/image_raw   -p depth_camera_info_topic:=/camera/camera/color/camera_info   -p base_frame:=camera_link   -p target_class_name:=btn_2_deactive
+
+ros2 run camera_perception_pkg yolov8_debug_node
