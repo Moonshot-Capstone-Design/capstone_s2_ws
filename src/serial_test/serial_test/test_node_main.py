@@ -400,8 +400,8 @@ class Nodelet(Node):
 
         self.accumulated_distance += np.fabs(linear_velocity) * dt
         amr_data_distance_ = String()   
-        amr_msg_string = f"{self.accumulated_distance:.3f} (m)"
-        amr_data_distance_.data = amr_msg_string
+        amr_msgs_string = f"{self.accumulated_distance:.3f} (m)"
+        amr_data_distance_.data = amr_msgs_string
         self.amr_data_distance.publish(amr_data_distance_)
         
 
@@ -694,8 +694,8 @@ class Nodelet(Node):
 
             self.count_lift += 1
             count_lift_ = String()   
-            amr_msg_string_count = f"{self.count_lift}"
-            count_lift_.data = amr_msg_string_count
+            amr_msgs_string_count = f"{self.count_lift}"
+            count_lift_.data = amr_msgs_string_count
             self.amr_data_lift.publish(count_lift_)
             
             msg1 = 'red_blinking'
