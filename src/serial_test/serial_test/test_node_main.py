@@ -14,7 +14,6 @@ import numpy as np
 
 
 from rclpy.qos import qos_profile_sensor_data, QoSProfile, ReliabilityPolicy, DurabilityPolicy
-from sklearn.cluster import DBSCAN
 import struct
 import sensor_msgs_py.point_cloud2 as pc2
 
@@ -681,7 +680,7 @@ class Nodelet(Node):
         self.joy_lift_down = msg.buttons[1]
 
         self.joy_speed_up = msg.buttons[11]
-        self.joy_speed_down = msg.buttons[15]
+        self.joy_speed_down = msg.buttons[10]
 
         if self.joy_lift_up == 1 and self.joy_lift_up_old==0:
 
