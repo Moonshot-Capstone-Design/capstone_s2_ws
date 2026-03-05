@@ -14,13 +14,9 @@ import numpy as np
 
 
 from rclpy.qos import qos_profile_sensor_data, QoSProfile, ReliabilityPolicy, DurabilityPolicy
-import struct
 import sensor_msgs_py.point_cloud2 as pc2
 
-
 from serial_test.motor_driver import MotorDriver
-
-
 import serial  ###5/5 update (STM)
 
 
