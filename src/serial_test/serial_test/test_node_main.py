@@ -171,7 +171,6 @@ class Nodelet(Node):
         # self.md.recv_read_this()
 
         if self.firstloop:
-            # self.md.send_torque_cmd(self.torque1, self.torque2)
             self.md.send_vel_cmd(self.velocity1, self.velocity2)
             #self.md.send_position_cmd(self.md.pos1, self.md.pos2, int(60), int(60))
             self.md.recv_motor_state()
@@ -179,8 +178,7 @@ class Nodelet(Node):
             self.target_pos2 = self.md.pos2
             # self.target_pos1 = 320
             # self.target_pos2 =  800
- 
-            
+
             self.del_pos1 = self.md.pos1
             self.del_pos2 = self.md.pos2
 
@@ -681,7 +679,7 @@ class Nodelet(Node):
         self.joy_lift_down = msg.buttons[1]
 
         self.joy_speed_up = msg.buttons[11]
-        self.joy_speed_down = msg.buttons[15]
+        self.joy_speed_down = msg.buttons[10]
 
         if self.joy_lift_up == 1 and self.joy_lift_up_old==0:
 
