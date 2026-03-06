@@ -16,17 +16,14 @@ import numpy as np
 from rclpy.qos import qos_profile_sensor_data, QoSProfile, ReliabilityPolicy, DurabilityPolicy
 import sensor_msgs_py.point_cloud2 as pc2
 
-
 from serial_test.motor_driver import MotorDriver
-
-
 import serial  ###5/5 update (STM)
 
 
 
 class Nodelet(Node):
     def __init__(self):
-        super().__init__('test_node_main')
+        super().__init__('serial_test')
         self.pub = self.create_publisher(WheelMotor, '/wheelmotor', 10)
         self.odom_pub = self.create_publisher(Odometry, 'odom', 10)
         self.sub_joy = self.create_subscription(Joy, '/joy', self.joy_callback, 100)
@@ -105,8 +102,8 @@ class Nodelet(Node):
         # self.md.write_BAUD()
 
         #odom param
-        self.wheel_separation = 0.298  # Adjust as necessary
-        self.wheel_diameter = 0.17    # Adjust as necessary
+        self.wheel_separation = 0.2  # Adjust as necessary
+        self.wheel_diameter = 0.13    # Adjust as necessary
         self.pose_x = 0.0
         self.pose_y = 0.0
         self.pose_theta = 0.0
@@ -350,7 +347,8 @@ class Nodelet(Node):
         # self.msg_wheelmotor.target1 = int(self.vel_input1)
         # self.msg_wheelmotor.target2 = int(self.vel_input2)
         self.msg_wheelmotor.v_x = (self.md.rpm1+self.md.rpm2)*np.pi*self.wheel_diameter/(60*2*4.33)
-        self.msg_wheelmotor.w_z = (self.md.rpm2-self.md.rpm1)*np.pi*self.wheel_diameter/(60*self.wheel_separation*4.33)
+        # Match odom yaw convention to hardware rotation direction.
+        self.msg_wheelmotor.w_z = (self.md.rpm1-self.md.rpm2)*np.pi*self.wheel_diameter/(60*self.wheel_separation*4.33)
         
         self.pub.publish(self.msg_wheelmotor)
 
@@ -380,7 +378,7 @@ class Nodelet(Node):
 
         # Calculate linear and angular velocities
         linear_velocity =  (left_wheel_disp + right_wheel_disp) / (2.0 * dt)
-        angular_velocity = (right_wheel_disp - left_wheel_disp) / (self.wheel_separation * dt)
+        angular_velocity = (left_wheel_disp - right_wheel_disp) / (self.wheel_separation * dt)
 
 
         
@@ -398,8 +396,8 @@ class Nodelet(Node):
 
         self.accumulated_distance += np.fabs(linear_velocity) * dt
         amr_data_distance_ = String()   
-        amr_msg_string = f"{self.accumulated_distance:.3f} (m)"
-        amr_data_distance_.data = amr_msg_string
+        amr_msgs_string = f"{self.accumulated_distance:.3f} (m)"
+        amr_data_distance_.data = amr_msgs_string
         self.amr_data_distance.publish(amr_data_distance_)
         
 
@@ -679,7 +677,7 @@ class Nodelet(Node):
         self.joy_lift_down = msg.buttons[1]
 
         self.joy_speed_up = msg.buttons[11]
-        self.joy_speed_down = msg.buttons[15]
+        self.joy_speed_down = msg.buttons[10]
 
         if self.joy_lift_up == 1 and self.joy_lift_up_old==0:
 
@@ -692,8 +690,8 @@ class Nodelet(Node):
 
             self.count_lift += 1
             count_lift_ = String()   
-            amr_msg_string_count = f"{self.count_lift}"
-            count_lift_.data = amr_msg_string_count
+            amr_msgs_string_count = f"{self.count_lift}"
+            count_lift_.data = amr_msgs_string_count
             self.amr_data_lift.publish(count_lift_)
             
             msg1 = 'red_blinking'
