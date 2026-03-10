@@ -73,8 +73,8 @@ class Nodelet(Node):
         # self.md.write_BAUD()
 
         #odom param
-        self.wheel_separation = 0.29  # Adjust as necessary
-        self.wheel_diameter = 0.17    # Adjust as necessary
+        self.wheel_separation = 0.205  # Adjust as necessary
+        self.wheel_diameter = 0.13    # Adjust as necessary
         self.pose_x = 0.0
         self.pose_y = 0.0
         self.pose_theta = 0.0

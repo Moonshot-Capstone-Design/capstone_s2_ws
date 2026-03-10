@@ -27,9 +27,9 @@
     <!-- Base Link -->
     <link name="chassis">
       <visual name="base_visual">
-        <origin xyz="0 0 0.325" rpy="0 0 0"/>
+        <origin xyz="0 0 0.28" rpy="0 0 0"/>
         <geometry>
-          <box size="0.72 0.45 0.61"/>
+          <box size="0.5 0.42 0.52"/>
           <!-- <box size="0.45 0.72 0.61"/>-->
         </geometry>
         <material name="white"/>
@@ -72,13 +72,13 @@
       <collision name="wheel_left_collision">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="0.085" length="0.046"/>
+          <cylinder radius="0" length="0.046"/>
         </geometry>
       </collision>
       <visual name="wheel_left_visual">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="0.085" length="0.046"/>
+          <cylinder radius="0.065" length="0.046"/>
         </geometry>
         <material name="black"/>
       </visual>
@@ -89,13 +89,13 @@
       <collision name="wheel_right_collision">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="0.085" length="0.046"/>
+          <cylinder radius="0.065" length="0.046"/>
         </geometry>
       </collision>
       <visual name="wheel_right_visual">
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="0.085" length="0.046"/>
+          <cylinder radius="0.065" length="0.046"/>
         </geometry>
         <material name="black"/>
       </visual>
@@ -112,35 +112,35 @@
     <joint name="wheel_left_joint" type="continuous">
       <parent link="chassis"/>
       <child link="wheel_left_link"/>
-      <origin xyz="0 0.145 0.085" rpy="-1.57 0 0"/>
+      <origin xyz="0 0.1 0.065" rpy="-1.57 0 0"/>
       <axis xyz="0 0 1"/>
     </joint>
 
     <joint name="wheel_right_joint" type="continuous">
       <parent link="chassis"/>
       <child link="wheel_right_link"/>
-      <origin xyz="0 -0.145 0.085" rpy="1.57 0 0"/>
+      <origin xyz="0 -0.1 0.065" rpy="1.57 0 0"/>
       <axis xyz="0 0 1"/>
     </joint>
 
     <joint name="lidar_joint" type="fixed">
       <parent link="chassis"/>
       <child link="laser"/>
-      <origin xyz="0.0 0.0 0.04" rpy="3.14 0 -3.14"/>
+      <origin xyz="0.0 0.0 0.225" rpy="3.14 0 -3.14"/>
       <!-- <axis xyz="0 1 0"/> -->
     </joint>
 
     <joint name="lidar1_joint" type="fixed">
       <parent link="chassis"/>
       <child link="lidar1_link"/>
-      <origin xyz="0.345 0.0 0.04" rpy="3.14 0 -3.14"/>
+      <origin xyz="0.26 0.0 0.225" rpy="3.14 0 -3.14"/>
       <!-- <axis xyz="0 1 0"/> -->
     </joint>
 
     <joint name="lidar2_joint" type="fixed">
       <parent link="chassis"/>
       <child link="lidar2_link"/>
-      <origin xyz="-0.345 -0.0 0.04" rpy="3.14 0 0"/>
+      <origin xyz="-0.26 -0.0 0.225" rpy="3.14 0 0"/>
       <!-- <axis xyz="0 1 0"/> -->
     </joint>
 
