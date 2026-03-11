@@ -45,13 +45,19 @@ def generate_launch_description():
                 IncludeLaunchDescription(
                     PythonLaunchDescriptionSource(
                         os.path.join(
-                            get_package_share_directory('amr'), 
+                            get_package_share_directory('amr_navigator'),
                             'launch', 
                             'nav2_bringup',
                             'localization_launch.py'
                         )
                     ),
-                    launch_arguments={'map': os.path.expandvars('$HOME/ros2_ws/src/amr/map/final_demo_3.yaml')}.items(),
+                    launch_arguments={
+                        'map': os.path.join(
+                            get_package_share_directory('amr_navigator'),
+                            'map',
+                            'final_demo_3.yaml',
+                        ),
+                    }.items(),
                 ),
             ]
         ),
@@ -63,7 +69,7 @@ def generate_launch_description():
                 IncludeLaunchDescription(
                     PythonLaunchDescriptionSource(
                         os.path.join(
-                            get_package_share_directory('amr'), 
+                            get_package_share_directory('amr_navigator'),
                             'launch', 
                             'nav2_bringup',
                             'navigation_launch.py'

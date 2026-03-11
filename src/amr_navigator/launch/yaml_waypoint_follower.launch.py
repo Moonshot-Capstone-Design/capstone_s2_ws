@@ -11,7 +11,7 @@ import os
 
 def generate_launch_description():
     pkg_share = get_package_share_directory('amr_navigator')
-    default_yaml = os.path.join(pkg_share, 'params', 'waypoints.yaml')
+    default_yaml = os.path.join(pkg_share, 'params', '1F_IT_building.yaml')
 
     waypoints_file = LaunchConfiguration('waypoints_file')
     sequence = LaunchConfiguration('sequence')

@@ -17,7 +17,7 @@ class YamlWaypointFollower(Node):
         default_yaml = os.path.join(
             get_package_share_directory('amr_navigator'),
             'params',
-            'waypoints.yaml',
+            '1F_IT_building.yaml',
         )
         self.declare_parameter('waypoints_file', default_yaml)
         # NOTE: An empty list is ambiguous in rclpy and gets inferred as BYTE_ARRAY.
